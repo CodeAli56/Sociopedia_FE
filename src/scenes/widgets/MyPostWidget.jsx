@@ -25,10 +25,11 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { setPosts } from "state";
   
+  
   const MyPostWidget = ({ picturePath }) => {
     const dispatch = useDispatch();
     const [isImage, setIsImage] = useState(false);
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState("");
     const [post, setPost] = useState("");
     const { palette } = useTheme();
     const { _id } = useSelector((state) => state.user);
@@ -41,11 +42,17 @@ import {
       const formData = new FormData();
       formData.append("userId", _id);
       formData.append("description", post);
+      
       if (image) {
-        formData.append("picture", image);
-        formData.append("picturePath", image.name);
+        const base64 = await convertTobase64(image);
+        console.log(base64);
+        setImage("here");
+        console.log(image);
+        // formData.append("picture", image);
+        // formData.append("picturePath", image.name);
+        formData.append("picturePath", base64);
       }
-  
+      console.log(formData);
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/posts`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
@@ -56,7 +63,21 @@ import {
       setImage(null);
       setPost("");
     };
-  
+    
+    const convertTobase64 = (file) => {
+      return new Promise((resolve, reject)=>{
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
+        fileReader.onerror = (error) => {
+          reject(error);
+        };
+      })
+    };
+
     return (
       <WidgetWrapper>
         <FlexBetween gap="1.5rem">

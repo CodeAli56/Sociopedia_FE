@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
+// import FileBase from "react-file-base64";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -48,6 +49,7 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
+  // const [image , setImage] = useState(null);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,11 +59,13 @@ const Form = () => {
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
+    console.log("here");
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
     formData.append("picturePath", values.picture.name);
+    // formData.append("picturePath", image);
     const savedUserResponse = await fetch(
       `${process.env.REACT_APP_SERVER_URL}/auth/register`,
       {
@@ -204,6 +208,7 @@ const Form = () => {
                       </Box>
                     )}
                   </Dropzone>
+                  {/* <FileBase type="file" multiple={false} onDone={({base64})=>setImage(base64)} /> */}
                 </Box>
               </>
             )}
