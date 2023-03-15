@@ -42,17 +42,12 @@ import {
       const formData = new FormData();
       formData.append("userId", _id);
       formData.append("description", post);
-      
       if (image) {
         const base64 = await convertTobase64(image);
-        console.log(base64);
-        setImage("here");
-        console.log(image);
         // formData.append("picture", image);
         // formData.append("picturePath", image.name);
         formData.append("picturePath", base64);
       }
-      console.log(formData);
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/posts`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
@@ -96,7 +91,7 @@ import {
         </FlexBetween>
         {isImage && (
           <Box
-            border={`1px solid ${medium}`}
+            border={`1px solid ${medium}`}d
             borderRadius="5px"
             mt="1rem"
             p="1rem"

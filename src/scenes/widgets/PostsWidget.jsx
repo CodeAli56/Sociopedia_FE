@@ -39,7 +39,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   return (
     <>
-      {posts.length && posts.map(
+      {posts.length ? posts.map(
         ({
           _id,
           userId,
@@ -65,7 +65,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             comments={comments}
           />
         )
-      )}
+      ):null}
     </>
   );
 };

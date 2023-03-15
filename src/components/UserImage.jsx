@@ -9,7 +9,7 @@ const UserImage = ({image ,size="60px"}) => {
                 borderRadius:"50%"}} 
                 width={size} height={size} 
                 alt='user' 
-                src={`${process.env.REACT_APP_SERVER_URL}/assets/${image}`}
+                src={`${image}`}
             />
         </Box>
     )
