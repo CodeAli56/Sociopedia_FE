@@ -13,7 +13,7 @@ const HomePage = () => {
 
   return (
     <Box>
-      <Navbar />
+       <Navbar />
       <Box
         width="100%"
         padding="2rem 6%"
@@ -38,7 +38,7 @@ const HomePage = () => {
             <FriendListWidget userId={_id} />
           </Box>
         )}
-      </Box>
+      </Box>  
     </Box>
   );
 };

@@ -6,8 +6,11 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  InputAdornment
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -50,6 +53,7 @@ const initialValuesLogin = {
 const Form = () => {
   const [pageType, setPageType] = useState("login");
   const [image , setImage] = useState("");
+  const [isPasswordVisible , setIsPasswordVisible] = useState(false);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -242,9 +246,11 @@ const Form = () => {
               helperText={touched.email && errors.email}
               sx={{ gridColumn: "span 4" }}
             />
+            
+           
             <TextField
               label="Password"
-              type="password"
+              type={isPasswordVisible ? "text" : "password"}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
@@ -252,7 +258,20 @@ const Form = () => {
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
               sx={{ gridColumn: "span 4" }}
-            />
+              InputProps={{ 
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {isPasswordVisible ? <VisibilityIcon onClick={()=>setIsPasswordVisible(!isPasswordVisible)} sx={{cursor:"pointer"}}/>
+                    : <VisibilityOffIcon onClick={()=>setIsPasswordVisible(!isPasswordVisible)} sx={{cursor:"pointer"}}/>}
+                  </InputAdornment>
+                )
+              }}
+              />
+            {/* {isPasswordVisible ? <VisibilityIcon onClick={()=>setIsPasswordVisible(!isPasswordVisible)} />
+              
+              : <VisibilityOffIcon onClick={()=>setIsPasswordVisible(!isPasswordVisible)} />} */}
+          
+            
           </Box>
 
           {/* BUTTONS */}
