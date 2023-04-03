@@ -13,7 +13,7 @@ function LoginPage() {
       fontSize="32px" 
       color="primary"
       >
-      Sociapedia
+      Sociopedia
       </Typography>
     </Box>
     <Box width={isNonMobileScreens ? "50%" : "93%"} p="2rem" m="2rem auto" borderRadius="1.5rem" backgroundColor={theme.palette.background.alt}>
