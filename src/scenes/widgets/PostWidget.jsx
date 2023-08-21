@@ -3,6 +3,7 @@ import {
     FavoriteBorderOutlined,
     FavoriteOutlined,
     ShareOutlined,
+    // DeleteIcon,
   } from "@mui/icons-material";
   import { Box, Divider, IconButton, Typography, useTheme,InputBase,Button } from "@mui/material";
   import Comment from "components/Comment";
@@ -12,7 +13,7 @@ import {
   import WidgetWrapper from "components/WidgetWrapper";
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
-  import { setPost } from "state";
+  import { setPosts,setPost } from "state";
   
   const PostWidget = ({
     postId,
@@ -65,6 +66,18 @@ import {
       setComment("");
     };
 
+    const handleDeletePost = async() =>{
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/posts/${postId}/delete`,{
+        method:"PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }        
+      });
+      const posts = await response.json();
+      dispatch(setPosts({ posts }));
+    }
+
     return (
       <WidgetWrapper m="2rem 0">
         <Friend
@@ -106,9 +119,14 @@ import {
             </FlexBetween>
           </FlexBetween>
   
-          <IconButton>
-            <ShareOutlined />
-          </IconButton>
+
+            <FlexBetween gap="0.3rem" >
+              <Typography onClick={handleDeletePost} style={{cursor:"pointer"}}>Delete</Typography>
+              <IconButton>
+                  <ShareOutlined />
+              </IconButton>
+            </FlexBetween>
+          
         </FlexBetween>
         {isComments && (
           <Box mt="0.5rem">
